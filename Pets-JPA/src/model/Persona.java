@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +25,7 @@ public class Persona {
 	private String direccion;
 	
 	@OneToMany(mappedBy="persona",cascade={CascadeType.PERSIST,CascadeType.REMOVE})
-	private List<Mascota> mascota = new ArrayList<Mascota>();
+	private Set<Mascota> mascota = new HashSet<Mascota>();
 
 	// SETTERS AND GETTERS 
 	
@@ -31,7 +33,7 @@ public class Persona {
 		return id;
 	}
 
-	public List<Mascota> getMascota() {
+	public Set<Mascota> getMascota() {
 		return mascota;
 	}
 

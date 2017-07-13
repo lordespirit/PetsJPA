@@ -37,9 +37,9 @@ public class Mascota {
 		return persona;
 	}
 
-	/*public void setPersona(Persona persona) {
+	public void setPersona(Persona persona) {
 		this.persona = persona;
-	}*/
+	}
 
 	public int getId() {
 		return id;

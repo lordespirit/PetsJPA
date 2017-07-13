@@ -90,7 +90,6 @@ public class TestPets {
 		
 	}
 	
-	/*
 	@Test
 	public void testUpdate(){
 		
@@ -104,22 +103,32 @@ public class TestPets {
 		Persona person3 = getMockPersona("Juan", "Garcia");
 		Persona person4 = getMockPersona("Anna", "Real");
 		
-		
-		mascota1.setPersona(person1);
-		mascota2.setPersona(person2);
-		mascota3.setPersona(person3);
-		mascota4.setPersona(person4);
-		mascota5.setPersona(person2);
-		mascota3.setPersona(person2);
-		person2.getMascota().
-
 
 		dbManager.connect();
-		dbManager.insert(mascota1);
-		dbManager.insert(mascota2);
-		dbManager.insert(mascota3);
-		dbManager.insert(mascota4);
-		dbManager.insert(mascota5);
+		
+		dbManager.getEntityManager().getTransaction().begin();
+		
+			dbManager.getEntityManager().persist(person1);
+			person1.getMascota().add(mascota1);
+				mascota1.setPersona(person1);
+			
+			dbManager.getEntityManager().persist(person2);
+			person2.getMascota().add(mascota2);
+			person2.getMascota().add(mascota5);
+				mascota2.setPersona(person2);
+				mascota5.setPersona(person2);
+			
+			dbManager.getEntityManager().persist(person3);
+			person3.getMascota().add(mascota3);
+				mascota3.setPersona(person3);
+
+			dbManager.getEntityManager().persist(person4);
+			person4.getMascota().add(mascota4);
+				mascota4.setPersona(person4);
+
+	
+			dbManager.getEntityManager().getTransaction().commit();
+		
 		dbManager.close(); 	
 
 		// Aquí empiezo un update del empleado (employee), se obtiene el objeto y se realizan cambios dentro de una transaccion.
@@ -129,29 +138,24 @@ public class TestPets {
 		dbManager.connect();
 		dbManager.getEntityManager().getTransaction().begin();
 		
-		Mascota mascotaUpdate = dbManager.getEntityManager().find(Mascota.class, mascota1.getId());
+		Persona personaUpdate = dbManager.getEntityManager().find(Persona.class, person2.getId());
 		
-		mascotaUpdate.setNombre("Perrito1");
-		mascotaUpdate.setAltura(1.75f);
-		mascotaUpdate.setTipo("canido");
-
-		mascotaUpdate.getPersona().setNombre("Persona12");
-		mascotaUpdate.getPersona().setEmail("persona12@movistar.es");
-		mascotaUpdate.getPersona().setTelefono("987123456");
+		personaUpdate.setNombre("Juanito");
+		personaUpdate.setApellido("Gaston");
+		personaUpdate.setTelefono("000112233");
 		
 		dbManager.getEntityManager().getTransaction().commit();
 		dbManager.close();
 		
-		Assert.assertEquals(true, mascotaUpdate.getPersona().getId()>0);
-		Assert.assertEquals("Persona12", mascotaUpdate.getPersona().getNombre());
-		Assert.assertEquals("Perrito1", mascotaUpdate.getNombre());
-		Assert.assertEquals(1.75f, mascotaUpdate.getAltura(),0.1);
+		Assert.assertEquals(true, personaUpdate.getId()>0);
+		Assert.assertEquals("Juanito", personaUpdate.getNombre());
+		Assert.assertEquals("Gaston", personaUpdate.getApellido());
+		Assert.assertEquals("000112233", personaUpdate.getTelefono());
 		
-		Assert.assertEquals(3,person2.getMascota().size());
+		Assert.assertEquals(2,person2.getMascota().size());
 		
 	}
 	
-	*/
 
 	private Persona getMockPersona(String nombre, String apellido) {
 		 Persona person = new Persona();
